@@ -1,0 +1,10 @@
+.task-name {
+  padding-right: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.task-complete {
+  text-decoration: line-through;
+  color: gray;
+}

@@ -3,7 +3,6 @@ import { Switch, Route } from 'react-router-dom';
 
 import Header from './components/header/header.component';
 import Home from './pages/home/home.component';
-
 import BottomNav from './components/bottom-nav/bottom-nav.component';
 
 import './App.css';
@@ -13,7 +12,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <Header />
-        <Switch>
+        <Switch >
           <Route exact path='/' component={Home} />
         </Switch>
         <BottomNav />

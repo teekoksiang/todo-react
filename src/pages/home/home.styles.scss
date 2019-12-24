@@ -1,4 +1,10 @@
 .home {
+  height: calc(100% - 100px);
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.task-bar {
+  margin-top: auto;
 }
