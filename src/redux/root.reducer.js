@@ -3,6 +3,7 @@ import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 import taskReducer from './task/task.reducer';
+import sectionReducer from './section/section.reducer';
 
 const persistConfig = {
   key: 'root',
@@ -11,7 +12,8 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  task: taskReducer
+  task: taskReducer,
+  section: sectionReducer
 });
 
 export default persistReducer(persistConfig, rootReducer);

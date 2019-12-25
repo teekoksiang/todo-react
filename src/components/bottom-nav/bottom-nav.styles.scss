@@ -1,3 +1,14 @@
+.bottom-nav-container {
+  display: flex;
+  justify-content: space-around;
+}
 .bottom-nav {
-  height: 50px;
+  width: 100%;
+  max-width: 360px;
+}
+.icon {
+  padding: 2px 0;
+}
+.active {
+  color: blue;
 }

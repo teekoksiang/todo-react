@@ -1,10 +1,6 @@
 .home {
-  height: calc(100% - 100px);
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.task-bar {
-  margin-top: auto;
 }

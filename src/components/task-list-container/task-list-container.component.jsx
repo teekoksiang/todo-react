@@ -1,46 +1,32 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+ 
+import { selectSections } from '../../redux/section/section.selector';
 
-import TaskList from '../task-list/task-list.component';
+import TaskListSection from '../task-list-section/task-list-section.component';
 
-import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import './task-list-container.styles.scss';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    width: '100%',
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
-  },
-}));
+const TaskListContainer = ({ sections }) => (
+  <List
+    component='nav'
+    className='list'
+  >
+    {
+      sections.map(section => (
+        <TaskListSection
+          key={section.id}
+          {...section}
+        />
+      ))
+    }
+  </List>
+);
 
-const TaskListContainer = () => {
-  const classes = useStyles();
+const mapStateToProps = createStructuredSelector({
+  sections: selectSections
+})
 
-  return (
-    <List
-      component='nav'
-      className={classes.root}
-    >
-      <TaskList 
-        key='today' 
-        start={0} 
-        end={1} 
-        title='Today' 
-      />
-      <TaskList 
-        key='tomorrow' 
-        start={1} 
-        end={2} 
-        title='Tomorrow' 
-      />
-      <TaskList 
-        key='upcoming' 
-        start={2} 
-        title='Upcoming' 
-      />
-    </List>
-  );
-};
-
-export default TaskListContainer;
+export default connect(mapStateToProps)(TaskListContainer);

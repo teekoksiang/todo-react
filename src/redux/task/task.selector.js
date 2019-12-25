@@ -20,3 +20,13 @@ export const selectTasksByDay = (start, end) =>
         : dayDiff >= start;
     })
   );
+
+export const selectNewId = createSelector(
+  [selectTasks],
+  tasks => 
+    tasks.reduce(
+      (maxId, task) =>
+        Math.max(maxId, task.id + 1),
+      0
+    )
+);
