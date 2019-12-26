@@ -12,7 +12,7 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import './task-list-section.styles.scss';
 
-const TaskList = ({tasks, title}) => {
+const TaskListSection = ({tasks, title}) => {
   const [open, setOpen] = React.useState(true);
 
   const expandList = () => {
@@ -42,7 +42,7 @@ const TaskList = ({tasks, title}) => {
 };
 
 const mapStateToProps = (state, props) => ({
-  tasks: selectTasksByDay(props.start, props.end)(state)
+  tasks: selectTasksByDay(props.start, props.end, props.search)(state)
 });
 
-export default connect(mapStateToProps)(TaskList);
+export default connect(mapStateToProps)(TaskListSection);

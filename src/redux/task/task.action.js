@@ -19,3 +19,8 @@ export const updateTask = task => ({
   type: TaskActionTypes.UPDATE_TASK,
   payload: task
 });
+
+export const searchTask = search => ({
+  type: TaskActionTypes.SEARCH_TASK,
+  payload: search
+});

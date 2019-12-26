@@ -8,7 +8,7 @@ import './home.styles.scss';
 const Home = () => (
   <div className='home'>
     <TaskListContainer />
-    <TaskBar className='task-bar' />
+    <TaskBar />
   </div>
 );
 

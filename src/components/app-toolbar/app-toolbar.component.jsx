@@ -1,4 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { createStructuredSelector } from 'reselect';
+
+import { selectSearch } from '../../redux/task/task.selector';
+import { searchTask } from '../../redux/task/task.action';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -10,8 +16,15 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import useStyles from './app-toolbar.styles';
 import './app-toolbar.styles.scss';
 
-const AppToolbar = () => {
+const AppToolbar = ({ searchTask, search, location, history }) => {
   const classes = useStyles();
+
+  const handleSearch = event => {
+    if (location.pathname !== '/') {
+      history.push('/')
+    }
+    searchTask(event.target.value);
+  };
 
   return (
     <div>
@@ -33,6 +46,8 @@ const AppToolbar = () => {
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
+              onChange={handleSearch}
+              value={search}
             />
           </div>
           <IconButton
@@ -47,4 +62,15 @@ const AppToolbar = () => {
   );
 }
 
-export default AppToolbar;
+const mapStateToProps = createStructuredSelector({
+  search: selectSearch 
+});
+
+const mapDispatchToProps = dispatch => ({
+  searchTask: search => dispatch(searchTask(search))
+});
+
+export default withRouter(connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AppToolbar));

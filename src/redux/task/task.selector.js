@@ -8,10 +8,21 @@ export const selectTasks = createSelector(
   task => task.tasks 
 );
 
-export const selectTasksByDay = (start, end) => 
+export const selectSearch = createSelector(
+  [selectTask],
+  task => task.search
+);
+
+export const selectTasksByDay = (start, end, search) => 
   createSelector(
     [selectTasks],
     tasks => tasks.filter(task => {
+      if (search !== '') {
+        if (!task.name.toLowerCase().includes(search.toLowerCase())) {
+          return false;
+        }
+      }
+
       const dayDiff = moment(task.datetime)
         .startOf('day')
         .diff(moment().startOf('day'), 'days');

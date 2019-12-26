@@ -5,11 +5,12 @@ import {
   addTask, 
   removeTask, 
   toggleTask, 
-  updateTask 
+  updateTask,
 } from './task.utils';
 
 const INITIAL_STATE = {
-  tasks: TASK_DATA
+  tasks: TASK_DATA,
+  search: '',
 };
 
 const taskReducer = (state = INITIAL_STATE, action) => {
@@ -33,6 +34,11 @@ const taskReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         tasks: updateTask(state.tasks, action.payload)
+      };
+    case TaskActionTypes.SEARCH_TASK:
+      return {
+        ...state,
+        search: action.payload
       };
     default:
       return state;
