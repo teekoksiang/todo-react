@@ -6,58 +6,44 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import EventIcon from '@material-ui/icons/Event';
 import SettingsIcon from '@material-ui/icons/Settings';
-import './bottom-nav.styles.scss';
 
 const BottomNav = ({ location }) => (
-  <div className='bottom-nav-container'>
-    <BottomNavigation
-      showLabels
-      className='bottom-nav'
-    >
-      <BottomNavigationAction 
+  <div className="bottom-nav-container">
+    <BottomNavigation showLabels className="bottom-nav">
+      <BottomNavigationAction
         component={Link}
-        to='/'
-        label="Tasks" 
+        to="/"
+        label="Tasks"
         icon={
-          <CheckBoxIcon 
-            className='icon'
-            color={`${location.pathname === '/' 
-                ? 'secondary' 
-                : 'action'
-              }`
-            } 
+          <CheckBoxIcon
+            className="icon"
+            color={`${location.pathname === '/' ? 'secondary' : 'action'}`}
           />
-        } 
+        }
       />
-      <BottomNavigationAction 
+      <BottomNavigationAction
         component={Link}
-        to='/event'
-        label="Events" 
+        to="/event"
+        label="Events"
         icon={
-          <EventIcon 
-            className='icon' 
-            color={`${location.pathname === '/event' 
-                ? 'secondary' 
-                : 'action'
-              }`
-            } 
+          <EventIcon
+            className="icon"
+            color={`${location.pathname === '/event' ? 'secondary' : 'action'}`}
           />
-        } 
+        }
       />
-      <BottomNavigationAction 
+      <BottomNavigationAction
         component={Link}
-        to='/setting'
-        label="Settings" 
+        to="/setting"
+        label="Settings"
         icon={
-          <SettingsIcon 
-            className='icon' 
-            color={`${location.pathname === '/setting' 
-                ? 'secondary' 
-                : 'action'
-              }`
-            } 
+          <SettingsIcon
+            className="icon"
+            color={`${
+              location.pathname === '/setting' ? 'secondary' : 'action'
+            }`}
           />
-        } 
+        }
       />
     </BottomNavigation>
   </div>

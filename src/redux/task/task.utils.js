@@ -19,7 +19,7 @@ export const toggleTask = (tasks, taskToToggle) => {
 export const updateTask = (tasks, taskToUpdate) => {
   return tasks.map(task => 
     task.id === taskToUpdate.id ? {
-      ...task, ...taskToUpdate
+      ...taskToUpdate
     } : task
   );
 };

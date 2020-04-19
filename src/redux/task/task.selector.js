@@ -3,10 +3,23 @@ import moment from 'moment';
 
 const selectTask = state => state.task;
 
+export const selectTaskUpdated = createSelector(
+  [selectTask],
+  task => task.taskUpdated
+);
+
 export const selectTasks = createSelector(
   [selectTask],
   task => task.tasks 
 );
+
+export const selectCurrentTask = taskId =>
+  createSelector(
+    [selectTasks],
+    tasks => tasks.find(task => {
+      return task.id === parseInt(taskId)
+    }
+  ));
 
 export const selectSearch = createSelector(
   [selectTask],
@@ -26,18 +39,9 @@ export const selectTasksByDay = (start, end, search) =>
       const dayDiff = moment(task.datetime)
         .startOf('day')
         .diff(moment().startOf('day'), 'days');
+
       return end ? 
         dayDiff >= start && dayDiff < end 
         : dayDiff >= start;
     })
   );
-
-export const selectNewId = createSelector(
-  [selectTasks],
-  tasks => 
-    tasks.reduce(
-      (maxId, task) =>
-        Math.max(maxId, task.id + 1),
-      0
-    )
-);

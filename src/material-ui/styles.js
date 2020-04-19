@@ -1,6 +1,12 @@
-import { fade, makeStyles } from '@material-ui/core/styles';
+import { fade, withStyles, makeStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+import Slider from '@material-ui/core/Slider'
+
+export const MuiThemeProviderL = MuiThemeProvider;
+
+export const createMuiThemeL = createMuiTheme;
+
+export const toolbarStyles = makeStyles(theme => ({
     grow: {
       flexGrow: 1,
     },
@@ -64,4 +70,43 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default useStyles;
+export const taskDetailStyles = makeStyles(theme => ({
+  root: {
+    '& .MuiTextField-root': {
+      margin: theme.spacing(1)
+    },
+  },
+  buttonText: {
+    textTransform: "capitalize"
+  },
+}));
+
+export const PrettoSlider = withStyles({
+  root: {
+    color: 'secondary',
+    height: 8,
+  },
+  thumb: {
+    height: 24,
+    width: 24,
+    backgroundColor: '#fff',
+    border: '2px solid currentColor',
+    marginTop: -8,
+    marginLeft: -12,
+    '&:focus,&:hover,&$active': {
+      boxShadow: 'inherit',
+    },
+  },
+  active: {},
+  valueLabel: {
+    left: 'calc(-50% + 4px)',
+  },
+  track: {
+    height: 8,
+    borderRadius: 4,
+  },
+  rail: {
+    height: 8,
+    borderRadius: 4,
+  },
+})(Slider);

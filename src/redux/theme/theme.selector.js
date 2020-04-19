@@ -9,8 +9,7 @@ export const selectCurrentTheme = createSelector(
   theme => theme.currentTheme
 );
 
-export const selectThemes = 
-  Object.keys(Themes).map(key => ({
-    type: key,
-    color: Themes[key].palette.primary
-  }));
+export const selectThemes = Object.keys(Themes).map(key => ({
+  type: key,
+  color: Themes[key].palette.primary
+}));

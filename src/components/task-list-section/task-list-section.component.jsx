@@ -10,9 +10,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import './task-list-section.styles.scss';
 
-const TaskListSection = ({tasks, title}) => {
+const TaskListSection = ({ tasks, title }) => {
   const [open, setOpen] = React.useState(true);
 
   const expandList = () => {
@@ -27,14 +26,9 @@ const TaskListSection = ({tasks, title}) => {
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-         {
-            tasks.map(task => (
-              <TaskListItem 
-                key={task.id}
-                task={task}
-              />
-            ))
-         }
+          {tasks.map(task => (
+            <TaskListItem key={task.id} task={task} />
+          ))}
         </List>
       </Collapse>
     </div>

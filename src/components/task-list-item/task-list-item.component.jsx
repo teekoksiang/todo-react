@@ -1,42 +1,54 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
-import { toggleTask, removeTask } from '../../redux/task/task.action';
+import { updateTask, removeTask } from '../../redux/task/task.action';
 
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
-import './task-list-item.styles.scss';
 
-const TaskListItem = ({ task, toggleTask, removeTask }) => {
-  const handleRemoveTask = (event, task) => {
+const TaskListItem = ({ task, updateTask, removeTask, history }) => {
+  const handleRemoveTask = event => {
     event.stopPropagation();
     removeTask(task);
   };
 
+  const handleToggleTask = event => {
+    event.stopPropagation();
+    const isDone = !task.is_done;
+    const updatedTask = {
+      ...task,
+      is_done: isDone
+    };
+    updateTask(updatedTask);
+  };
+
+  const handleOnClick = () => {
+    history.push(`/task/${task.id}`);
+  };
+
   return (
-    <div className='list-item'>
-      <ListItem 
-        button 
-        key={task.id} 
-        onClick={() => toggleTask(task)} 
-      >
-        <ListItemText 
+    <div className="task-list-item">
+      <ListItem button key={task.id} onClick={handleOnClick}>
+        <ListItemText
           className={`${task.is_done ? 'task-complete' : ''} task-name`}
-          primary={task.name} 
+          primary={task.name}
         />
         <div>
-        {
-          task.is_done ? (
-            <RemoveCircleOutlineIcon 
-              fontSize='small' 
-              color='error'
-              onClick={(event) => handleRemoveTask(event, task)} 
-            /> 
-          )
-          : <RadioButtonUncheckedIcon fontSize='small' />
-        }
+          {task.is_done ? (
+            <RemoveCircleOutlineIcon
+              fontSize="small"
+              color="error"
+              onClick={event => handleRemoveTask(event)}
+            />
+          ) : (
+            <RadioButtonUncheckedIcon
+              fontSize="small"
+              onClick={event => handleToggleTask(event)}
+            />
+          )}
         </div>
       </ListItem>
     </div>
@@ -44,11 +56,8 @@ const TaskListItem = ({ task, toggleTask, removeTask }) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  toggleTask: task => dispatch(toggleTask(task)),
+  updateTask: task => dispatch(updateTask(task)),
   removeTask: task => dispatch(removeTask(task))
 });
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(TaskListItem);
+export default withRouter(connect(null, mapDispatchToProps)(TaskListItem));

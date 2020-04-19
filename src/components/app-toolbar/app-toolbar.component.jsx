@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 
 import { selectSearch } from '../../redux/task/task.selector';
@@ -13,15 +13,14 @@ import SearchIcon from '@material-ui/icons/Search';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import useStyles from './app-toolbar.styles';
-import './app-toolbar.styles.scss';
+import { toolbarStyles } from '../../material-ui/styles';
 
 const AppToolbar = ({ searchTask, search, location, history }) => {
-  const classes = useStyles();
+  const classes = toolbarStyles();
 
-  const handleSearch = event => {
+  const handleSearch = (event) => {
     if (location.pathname !== '/') {
-      history.push('/')
+      history.push('/');
     }
     searchTask(event.target.value);
   };
@@ -30,9 +29,7 @@ const AppToolbar = ({ searchTask, search, location, history }) => {
     <div>
       <AppBar className={classes.appBar} position="static">
         <Toolbar className={classes.toolbar}>
-          <IconButton 
-            edge="start" 
-            color="inherit" aria-label="menu">
+          <IconButton edge="start" color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton>
           <div className={classes.search}>
@@ -51,6 +48,8 @@ const AppToolbar = ({ searchTask, search, location, history }) => {
             />
           </div>
           <IconButton
+            component={Link}
+            to="/login"
             aria-label="account of current user"
             color="inherit"
           >
@@ -60,17 +59,16 @@ const AppToolbar = ({ searchTask, search, location, history }) => {
       </AppBar>
     </div>
   );
-}
+};
 
 const mapStateToProps = createStructuredSelector({
-  search: selectSearch 
+  search: selectSearch,
 });
 
-const mapDispatchToProps = dispatch => ({
-  searchTask: search => dispatch(searchTask(search))
+const mapDispatchToProps = (dispatch) => ({
+  searchTask: (search) => dispatch(searchTask(search)),
 });
 
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AppToolbar));
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(AppToolbar)
+);

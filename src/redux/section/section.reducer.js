@@ -3,7 +3,7 @@ const INITIAL_STATE = {
     {
       id: 1,
       title: 'Today',
-      start: 0,
+      start: -99,
       end: 1,
     },
     {
