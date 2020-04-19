@@ -26,9 +26,11 @@ const TaskListSection = ({ tasks, title }) => {
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          {tasks.map(task => (
-            <TaskListItem key={task.id} task={task} />
-          ))}
+          {tasks.length !== 0 ? (
+            tasks.map((task) => <TaskListItem key={task.id} task={task} />)
+          ) : (
+            <div></div>
+          )}
         </List>
       </Collapse>
     </div>
@@ -36,7 +38,7 @@ const TaskListSection = ({ tasks, title }) => {
 };
 
 const mapStateToProps = (state, props) => ({
-  tasks: selectTasksByDay(props.start, props.end, props.search)(state)
+  tasks: selectTasksByDay(props.start, props.end, props.search)(state),
 });
 
 export default connect(mapStateToProps)(TaskListSection);

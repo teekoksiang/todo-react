@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 
 import './login.styles.scss';
 
-const Login = ({ currentUser, signOutStart }) => {
+const Login = ({ currentUser, signOutStart, fromPath }) => {
   return (
     <div className="login">
       {currentUser ? (
@@ -25,7 +25,7 @@ const Login = ({ currentUser, signOutStart }) => {
           </Button>
         </div>
       ) : (
-        <LoginForm />
+        <LoginForm fromPath={fromPath} />
       )}
     </div>
   );

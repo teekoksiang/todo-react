@@ -32,7 +32,7 @@ const createUserProfileDocument = async (userAuth, additionalData) => {
   };
   let response = await API.get(`user/`, config);
   if (response.data.message.error) {
-    // user profile not exist, store it
+    // user profile not exist, create and store it
     response = await API.post(`user/register`, user);
     return response.data.message;
   } else {

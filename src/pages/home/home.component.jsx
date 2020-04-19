@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { selectCurrentUser } from '../../redux/user/user.selector';
 
 import { fetchTasks } from '../../redux/task/task.action';
 
@@ -11,24 +13,26 @@ import './home.styles.scss';
 class Home extends React.Component {
   componentDidMount() {
     const { fetchTasks } = this.props;
-    fetchTasks();
+    const { currentUser } = this.props;
+    fetchTasks(currentUser.id);
   }
 
   render() {
     return (
-      <div className='home'>
+      <div className="home">
         <TaskListContainer />
         <TaskBar />
       </div>
-    )
+    );
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  fetchTasks: () => dispatch(fetchTasks())
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
 });
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(Home);
+const mapDispatchToProps = (dispatch) => ({
+  fetchTasks: (userId) => dispatch(fetchTasks(userId)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

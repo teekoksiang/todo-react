@@ -249,7 +249,7 @@ const TaskDetail = ({
           horizontal: 'center',
         }}
         open={taskUpdated}
-        autoHideDuration={2000}
+        autoHideDuration={400}
         onClose={handleClose}
         message="Task updated"
         action={

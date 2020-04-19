@@ -1,50 +1,51 @@
 import TaskActionTypes from './task.types';
 
-export const addTask = task => ({
+export const addTask = (task) => ({
   type: TaskActionTypes.ADD_TASK,
-  payload: task
+  payload: task,
 });
 
-export const removeTask = task => ({
+export const removeTask = (task) => ({
   type: TaskActionTypes.REMOVE_TASK,
-  payload: task
+  payload: task,
 });
 
-export const updateTask = task => ({
+export const updateTask = (task) => ({
   type: TaskActionTypes.UPDATE_TASK,
-  payload: task
+  payload: task,
 });
 
-export const setTaskUpdated = bool => ({
+export const setTaskUpdated = (bool) => ({
   type: TaskActionTypes.TASK_UPDATED,
-  payload: bool
+  payload: bool,
 });
 
-export const searchTask = search => ({
+export const searchTask = (search) => ({
   type: TaskActionTypes.SEARCH_TASK,
-  payload: search
+  payload: search,
 });
 
-export const fetchTask = id => ({
+export const fetchTask = (id) => ({
   type: TaskActionTypes.FETCH_TASK,
-  payload: id
+  payload: id,
 });
 
-export const fetchTasks = () => ({
-  type: TaskActionTypes.FETCH_TASKS
+export const fetchTasks = (user_id) => ({
+  type: TaskActionTypes.FETCH_TASKS,
+  payload: user_id,
 });
 
-export const fetchTasksSuccess = tasks => ({
+export const fetchTasksSuccess = (tasks) => ({
   type: TaskActionTypes.FETCH_TASKS_SUCCESS,
-  payload: tasks
+  payload: tasks,
 });
 
-export const actionFailure = errorMessage => ({
+export const actionFailure = (errorMessage) => ({
   type: TaskActionTypes.ACTION_FAILURE,
-  payload: errorMessage
+  payload: errorMessage,
 });
 
-export const actionSuccess = object => ({
+export const actionSuccess = (object) => ({
   type: TaskActionTypes.ACTION_SUCCESS,
-  payload: object
+  payload: object,
 });

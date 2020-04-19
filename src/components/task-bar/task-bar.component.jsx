@@ -1,7 +1,9 @@
 import React from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
+import { selectCurrentUser } from '../../redux/user/user.selector';
 import { addTask } from '../../redux/task/task.action';
 
 import IconButton from '@material-ui/core/IconButton';
@@ -9,11 +11,11 @@ import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import AddIcon from '@material-ui/icons/Add';
 
-const TaskBar = ({ addTask }) => {
+const TaskBar = ({ addTask, currentUser }) => {
   const [isEmpty, setIsEmpty] = React.useState(true);
   const [taskName, setTaskName] = React.useState('');
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     const taskName = event.target.value;
     setTaskName(taskName);
     taskName.length > 0 ? setIsEmpty(false) : setIsEmpty(true);
@@ -22,21 +24,21 @@ const TaskBar = ({ addTask }) => {
   const handleAddTask = () => {
     if (taskName.length > 0) {
       const task = {
+        user_id: currentUser.id,
         name: taskName,
         notes: '',
         category: '',
         datetime: moment(),
         set_reminder: false,
         is_done: false,
-        user_id: 1,
-        priority: 1
+        priority: 2,
       };
       addTask(task);
       setTaskName('');
     }
   };
 
-  const handleKeyPress = event => {
+  const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
       event.preventDefault();
       handleAddTask();
@@ -62,7 +64,7 @@ const TaskBar = ({ addTask }) => {
                   <AddIcon />
                 </IconButton>
               </InputAdornment>
-            )
+            ),
           }}
           value={taskName}
           onChange={handleChange}
@@ -73,8 +75,12 @@ const TaskBar = ({ addTask }) => {
   );
 };
 
-const mapDispatchToProps = dispatch => ({
-  addTask: task => dispatch(addTask(task))
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
 });
 
-export default connect(null, mapDispatchToProps)(TaskBar);
+const mapDispatchToProps = (dispatch) => ({
+  addTask: (task) => dispatch(addTask(task)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TaskBar);

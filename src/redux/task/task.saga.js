@@ -8,11 +8,32 @@ import {
 } from './task.action';
 import TaskActionTypes from './task.types';
 
-export function* fetchTaskAsync({ payload }) {
-  const taskId = payload;
+import API from '../../utils/API';
 
+const getTasksByUserId = (userId) => {
+  const config = {
+    params: {
+      user_id: userId,
+    },
+  };
+  return API.get(`todo/tasks/`, config);
+};
+
+const createTask = (payload) => {
+  return API.post(`todo/tasks`, payload);
+};
+
+const updateTask = (payload) => {
+  return API.put(`todo/update/${payload.id}`, payload);
+};
+
+const deleteTask = (taskId) => {
+  return API.delete(`todo/delete/${taskId}`);
+};
+
+export function* fetchTaskAsync({ payload }) {
   try {
-    const res = yield call(fetch, `/api/tasks/${taskId}`);
+    const res = yield call(getTasksByUserId, payload);
     const resData = yield call(res.json.bind(res));
     const object = {
       key: 'currentTask',
@@ -24,11 +45,14 @@ export function* fetchTaskAsync({ payload }) {
   }
 }
 
-export function* fetchTasksAsync() {
+export function* fetchTasksAsync({ payload }) {
   try {
-    const res = yield call(fetch, '/api/tasks');
-    const resData = yield call(res.json.bind(res));
-    yield put(fetchTasksSuccess(resData));
+    const res = yield call(getTasksByUserId, payload);
+    if (res.data.message.error) {
+      yield put(fetchTasksSuccess([]));
+    } else {
+      yield put(fetchTasksSuccess(res.data.message));
+    }
   } catch (error) {
     yield put(actionFailure(error.message));
   }
@@ -36,15 +60,8 @@ export function* fetchTasksAsync() {
 
 export function* addTaskAsync({ payload }) {
   try {
-    const options = {
-      method: 'POST',
-      body: JSON.stringify(payload),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-    yield call(fetch, '/api/tasks', options);
-    yield fetchTasksAsync();
+    yield call(createTask, payload);
+    yield fetchTasksAsync({ payload: payload.user_id });
   } catch (error) {
     yield put(actionFailure(error.message));
   }
@@ -53,38 +70,22 @@ export function* addTaskAsync({ payload }) {
 export function* removeTaskAsync({ payload }) {
   try {
     const taskId = payload.id;
-
-    const options = {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-    yield call(fetch, `/api/tasks/${taskId}`, options);
-    yield fetchTasksAsync();
+    yield call(deleteTask, taskId);
+    yield fetchTasksAsync({ payload: payload.user_id });
   } catch (error) {
     yield put(actionFailure(error.message));
   }
 }
 
-export function* updateTaskSuccess() {
+export function* updateTaskSuccess(userId) {
   yield put(setTaskUpdated(true));
-  yield fetchTasksAsync();
+  yield fetchTasksAsync({ payload: userId });
 }
 
 export function* updateTaskAsync({ payload }) {
   try {
-    const taskId = payload.id;
-
-    const options = {
-      method: 'PUT',
-      body: JSON.stringify(payload),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-    yield call(fetch, `/api/tasks/${taskId}`, options);
-    yield updateTaskSuccess();
+    yield call(updateTask, payload);
+    yield updateTaskSuccess(payload.user_id);
   } catch (error) {
     yield put(actionFailure(error.message));
   }

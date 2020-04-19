@@ -60,7 +60,11 @@ const App = ({ currentTheme, currentUser, checkUserSession }) => {
               path="/task/:id"
               component={Task}
             />
-            <Route exact path="/login" component={Login} />
+            <Route
+              exact
+              path="/login"
+              render={() => (currentUser ? <Redirect to="" /> : <Login />)}
+            />
           </Switch>
           <BottomNav />
         </div>
